@@ -4,15 +4,12 @@ var everyauth = require('everyauth'),
     client = redis.createClient(),
     user = require('./users');
 
-
-
 everyauth
   .facebook
     .appId(conf.fb.appId)
     .appSecret(conf.fb.appSecret)
     .scope("email")
     .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-
         user.usermodel.addUser(client, fbUserMetadata);
         return true;
     })

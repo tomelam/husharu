@@ -6,14 +6,16 @@
 require.paths.push('/usr/local/lib/node_modules');
 var express = require('express'),
     app = module.exports = express.createServer(),
-   everyauth = require('everyauth'),
-   login = require('./login');
+    stylus = require('stylus'),
+    everyauth = require('everyauth'),
+    login = require('./login');
 
-everyauth.debug = true;
-// Configuration
-
-
-
+function compile(str, path) {
+  return stylus(str)
+    .set('filename', path)
+    .set('warn', true)
+    .set('compress', true);
+}
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -24,6 +26,12 @@ app.configure(function(){
   app.use(express.session({ secret: 'htuayreve'}));
   app.use(everyauth.middleware());
   app.use(app.router);
+
+  app.use(stylus.middleware({
+      src: __dirname + '/views' // .styl files are located in `views/stylesheets`
+    , dest: __dirname + '/public' // .styl resources are compiled `/stylesheets/*.css`
+    , compile: compile
+  }));
   app.use(express.static(__dirname + '/public'));
 });
 
@@ -38,7 +46,13 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-    res.render('home', {
+    res.render('index', {
+      title: 'Welcome'
+    });
+});
+
+app.get('/login', function(req, res){
+    res.render('login', {
       title: 'Login'
     });
 });
