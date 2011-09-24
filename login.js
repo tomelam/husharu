@@ -4,8 +4,6 @@ var everyauth = require('everyauth'),
     client = redis.createClient(),
     user = require('./users');
 
-
-
 everyauth
   .facebook
     .appId(conf.fb.appId)

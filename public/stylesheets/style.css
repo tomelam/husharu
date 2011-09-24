@@ -1,2 +1,5 @@
-body{width:50%}
+body{border-top:2px solid #000;padding:20px}
 header{font-family:"julee" cursive;font-size:2em}
+.left{float:left}
+.right{float:right}
+.clear{clear:both}
