@@ -79,6 +79,12 @@ app.get('/', function(req, res){
     res.render('home')
 });
 
+app.get('/comment', function(req, res){
+  res.render('comment', {
+      title: 'Comment page'
+  });
+});
+
 everyauth.helpExpress(app);
 
 app.listen(3000);
