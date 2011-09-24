@@ -12,9 +12,13 @@ everyauth
     .appSecret(conf.fb.appSecret)
     .scope("email")
     .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-
-        user.usermodel.addUser(client, fbUserMetadata);
-        return true;
+        var promise = this.Promise();
+        user.usermodel.addUser(client, fbUserMetadata, function (err, user) {
+            if (err) return promise.fail(err);
+            console.dir(user);
+            promise.fulfill(user);
+        });
+        return promise;
     })
     .redirectPath('/');
 

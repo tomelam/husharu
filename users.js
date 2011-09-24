@@ -1,22 +1,27 @@
 var usermodel = {
-    addUser : function(client, userdata) {
+    addUser : function(client, userdata, callback) {
         id = userdata.id;
-        hashkey = "user" + id;
-        if(client.hgetall(hashkey))
-            return;
-
-        hashkey = "user" + id;
+        hashkey = "user" + ":" + id;
         email = userdata.email;
         first_name = userdata.first_name;
         last_name = userdata.last_name;
-
-        client.hmset(hashkey,
+        exists = client.hgetall(hashkey, function(err, obj){
+            if(obj.length > 0){
+                callback(err,obj);
+                return ;
+            }
+            client.hmset(hashkey,
                      {
                          "email": email,
                          "first_name": first_name,
                          "last_name": last_name,
                      }
-         );
+            );
+            client.hgetall(hashkey, function(err, obj){
+                     callback(err,obj);
+            });
+
+        });
     }
 }
 
