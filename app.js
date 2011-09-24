@@ -89,4 +89,4 @@ app.get('/comment', function(req, res){
 
 everyauth.helpExpress(app);
 
-app.listen(3000);
+app.listen(process.env['app_port'] || 3000);
