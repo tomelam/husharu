@@ -5,34 +5,15 @@
 
 require.paths.push('/usr/local/lib/node_modules');
 var express = require('express'),
-    everyauth = require('everyauth'),
-    conf = require('./conf'),
-    redis = require("redis"),
-    client = redis.createClient(),
-    user = require('./users'),
-    app = module.exports = express.createServer();
+    app = module.exports = express.createServer(),
+   everyauth = require('everyauth'),
+   login = require('./login');
 
 everyauth.debug = true;
 // Configuration
 
 
 
-everyauth
-  .facebook
-    .appId(conf.fb.appId)
-    .appSecret(conf.fb.appSecret)
-    .scope("email")
-    .findOrCreateUser( function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-
-        user.usermodel.addUser(client, fbUserMetadata);
-        return true;
-    })
-    .redirectPath('/');
-
-
-client.on("error", function (err) {
-    console.log("Error " + err);
-});
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -67,6 +48,13 @@ app.get('/comment', function(req, res){
       title: 'Comment page'
   });
 });
+
+
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
+
+everyauth.debug = true;
 
 everyauth.helpExpress(app);
 
