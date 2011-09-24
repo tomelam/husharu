@@ -1,5 +1,5 @@
+h1= title
 - if (!everyauth.loggedIn)
-  h2 Not Authenticated
   #fb-login.fb_button(style='background-position: left -188px')
     a.fb_button_medium(href='/auth/facebook')
       span#fb_login_text.fb_button_text
@@ -9,7 +9,6 @@
       img(style='border: 0px', src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-l.png')
 
 -else
-  h2 Authenticated
   - if (everyauth.facebook)
     h3 Facebook User Data
     p= JSON.stringify(everyauth.facebook.user)

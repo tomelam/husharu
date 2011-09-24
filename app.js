@@ -76,7 +76,9 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-    res.render('home')
+    res.render('home', {
+      title: 'Login'
+    });
 });
 
 app.get('/comment', function(req, res){

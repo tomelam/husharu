@@ -4,7 +4,7 @@ Husharu
 A nodejs website for people to comment about the products they use
 in everyday life.
 
-`This is a jsFoo hacknight (http://jsfoo.hasgeek.com/hacknight)
+husharu is a jsFoo hacknight (http://jsfoo.hasgeek.com/hacknight) production
 
 Authors
 =======
