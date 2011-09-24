@@ -46,9 +46,14 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-    res.render('index', {
-      title: 'Welcome'
-    });
+  // TODO: get last 5 comments
+  res.render('index', {
+    title: 'Welcome',
+    locals: {
+      comments: {
+      }
+    }
+  });
 });
 
 app.get('/login', function(req, res){

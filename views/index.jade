@@ -1,2 +1,12 @@
 h1= title
-p Welcome to #{title}
+section#welcome
+  ul
+    li Comment about the products you care about
+    li Vote on other comments/products
+    li Build a credibility number for all products and companies
+    li Free to use
+
+ul#comments
+  - each comment in comments
+    Some recent comments
+    li #{comment.desc} by #{comment.user_id} on #{comment.product_id}
