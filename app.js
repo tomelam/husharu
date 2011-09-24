@@ -63,13 +63,6 @@ app.get('/comment', function(req, res){
   });
 });
 
-
-client.on("error", function (err) {
-    console.log("Error " + err);
-});
-
-everyauth.debug = true;
-
 everyauth.helpExpress(app);
 
 app.listen(process.env['app_port'] || 3000);
