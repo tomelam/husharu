@@ -1,7 +1,5 @@
 var everyauth = require('everyauth'),
     conf = require('./conf');
-    redis = require("redis"),
-    client = redis.createClient(),
     user = require('./users');
 
 everyauth
@@ -20,10 +18,6 @@ everyauth
     })
     .redirectPath('/');
 
-
-client.on("error", function (err) {
-    console.log("Error " + err);
-});
 
 everyauth.debug = true;
 

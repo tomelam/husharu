@@ -71,3 +71,4 @@ app.get('/comment', function(req, res){
 everyauth.helpExpress(app);
 
 app.listen(process.env['app_port'] || 3000);
+console.info("Started on port %d", app.address().port);
