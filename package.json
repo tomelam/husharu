@@ -4,9 +4,10 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.4.6"
-    , "stylus": ">= 0.0.1"
-    , "jade": ">= 0.0.1"
-    , "everyauth": ">= 0.2.20"
+      "express": ">= 2.5"
+    , "stylus": ">= 0.19.3"
+    , "jade": ">= 0.18.0"
+    , "everyauth": ">= 0.2.23"
   }
+  , "engines": { "node": "0.6", "npm": "1"}
 }

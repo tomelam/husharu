@@ -1,9 +1,7 @@
-
 /**
  * Module dependencies.
  */
 
-require.paths.push('/usr/local/lib/node_modules');
 var express = require('express'),
     app = module.exports = express.createServer(),
     stylus = require('stylus'),

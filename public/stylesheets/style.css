@@ -1,6 +1,6 @@
-body{border-top:2px solid #000;font-family:"Prata",serif}
+body{border-top:2px solid #000;font-family:'Prata',serif}
 #container{padding:0 5%}
-header{font-family:"julee" cursive;font-size:2em;padding:6px 20px;background:#fff8c6}
+header{font-family:'julee' cursive;font-size:2em;padding:6px 20px;background:#fff8c6}
 .orange{color:#fef4e9;border:solid 1px #da7c0c;background:#f78d1d;background:-webkit-gradient(linear,left top,left bottom,from(#faa51a),to(#f47a20));background:-moz-linear-gradient(top,#faa51a,#f47a20)}
 .orangehover{background:#f47c20;background:-webkit-gradient(linear,left top,left bottom,from(#f88e11),to(#f06015));background:-moz-linear-gradient(top,#f88e11,#f06015)}
 .orangeactive{color:#fcd3a5;background:-webkit-gradient(linear,left top,left bottom,from(#f47a20),to(#faa51a));background:-moz-linear-gradient(top,#f47a20,#faa51a)}
