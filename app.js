@@ -17,8 +17,16 @@ function compile(str, path) {
     .set('compress', true);
 }
 
-db.get('sobha', function(err, doc) {
-  console.log(doc);
+db.save('_design/comments', {
+  views: {
+    all: {
+      map: function(doc) {
+        if (doc.level && doc.level === 'comment') {
+          emit(doc.level, doc);
+        }   
+      }
+    }
+  }
 });
 
 app.configure(function(){
@@ -50,12 +58,22 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-  // TODO: get last 5 comments
+  var comments = [];
+
+  db.view('_design/comments/all', function (err, res) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.forEach(function (row) {
+      comments.push(row);
+    });
+  });
+
   res.render('index', {
     title: 'Welcome',
     locals: {
-      comments: {
-      }
+      comments: comments
     }
   });
 });

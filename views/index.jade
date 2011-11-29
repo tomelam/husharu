@@ -9,4 +9,4 @@ section#welcome
 ul#comments
   - each comment in comments
     Some recent comments
-    li #{comment.desc} by #{comment.user_id} on #{comment.product_id}
+    li #{comment.created_at} by #{comment.posted_by} on #{comment.product_id}
