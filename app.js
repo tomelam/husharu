@@ -6,7 +6,9 @@ var express = require('express'),
     app = module.exports = express.createServer(),
     stylus = require('stylus'),
     everyauth = require('everyauth'),
-    login = require('./login');
+    login = require('./login'),
+    cradle = require('cradle'),
+    db = new(cradle.Connection)().database('husharu_db');
 
 function compile(str, path) {
   return stylus(str)
@@ -14,6 +16,10 @@ function compile(str, path) {
     .set('warn', true)
     .set('compress', true);
 }
+
+db.get('sobha', function(err, doc) {
+  console.log(doc);
+});
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -55,14 +61,14 @@ app.get('/', function(req, res){
 });
 
 app.get('/login', function(req, res){
-    res.render('login', {
-      title: 'Login'
-    });
+  res.render('login', {
+    title: 'Login'
+  });
 });
 
 app.get('/comment', function(req, res){
   res.render('comment', {
-      title: 'Comment page'
+    title: 'Comment page'
   });
 });
 
