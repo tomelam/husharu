@@ -1,23 +1,26 @@
 h1= title
-section#feature.right.clearfix
-  ul
-    li Comment about the products you care about
-    li Vote on other comments/products
-    li Build a credibility number for all products and companies
-    li Free to use
 
-- if (comments.length)
-  h3 Some recent comments
-  ul#comments
-    - each comment in comments
-      li.comment 
-        p #{comment.comment}
-        p.attribution 
-          | posted on 
-          span.date #{comment.display_date}
-          |  by
-          span.user #{comment.posted_by}
-          |  about
-          span.product #{comment.product_name}
-- else
-  p.clearfix There are no comments yet.  Be the <a href='/comment'>first</a>.
+div.clearfix
+  section#features.right
+    ul
+      li Comment about the products you care about
+      li Vote on other comments/products
+      li Build a credibility number for all products and companies
+      li Free for non commercial use.
+
+  - if (comments.length)
+    section
+      header Some recent comments
+      ul#comments
+        - each comment in comments
+          li.comment 
+            p #{comment.comment}
+            p.attribution 
+              | posted on 
+              span.date #{comment.display_date}
+              |  by
+              span.user #{comment.posted_by}
+              |  about
+              span.product #{comment.product_name}
+  - else
+    p.clearfix There are no comments yet.  Be the <a href='/comment'>first</a>.
