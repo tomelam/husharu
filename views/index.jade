@@ -10,8 +10,14 @@ section#feature.right.clearfix
   h3 Some recent comments
   ul#comments
     - each comment in comments
-      li 
+      li.comment 
         p #{comment.comment}
-        p.attribution #{comment.created_at}(time) by #{comment.posted_by} on #{comment.product_id}(Product)
+        p.attribution 
+          | posted on 
+          span.date #{comment.display_date}
+          |  by
+          span.user #{comment.posted_by}
+          |  about
+          span.product #{comment.product_name}
 - else
   p.clearfix There are no comments yet.  Be the <a href='/comment'>first</a>.
