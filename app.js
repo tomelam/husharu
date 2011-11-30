@@ -8,7 +8,6 @@ var express = require('express'),
     everyauth = require('everyauth'),
     login = require('./login'),
     cradle = require('cradle'),
-    async = require('async'),
     db = new(cradle.Connection)().database('husharu_db');
 
 function compile(str, path) {
