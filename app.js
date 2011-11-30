@@ -57,24 +57,22 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res){
-  var comments = [];
-
-  db.view('_design/comments/all', function (err, res) {
+app.get('/', function(req, renderer){
+  db.view('comments/all', function (err, res) {
     if (err) {
       console.log(err);
       return;
     }
+    var comments = [];
     res.forEach(function (row) {
       comments.push(row);
     });
-  });
-
-  res.render('index', {
-    title: 'Welcome',
-    locals: {
-      comments: comments
-    }
+    renderer.render('index', {
+      title: 'Welcome',
+      locals: {
+        comments: comments
+      }
+    });
   });
 });
 
