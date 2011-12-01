@@ -20,6 +20,7 @@ div.clearfix
               |  by
               span.user #{comment.posted_by}
               |  about
-              span.product #{comment.product_name}
+              span.product #{comment.product_name}.
+              |  See <a href='/comment/#{comment._id}'>more</a>
   - else
     p.clearfix There are no comments yet.  Be the <a href='/comment'>first</a>.

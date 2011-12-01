@@ -111,8 +111,7 @@ app.get('/comment', function(req, renderer){
   var products = [];
   db.view('products/all', function (err, res) {
     if (err) {
-      console.log(err);
-      return;
+      throw new Error('Unable to retrieve products');
     }
     res.forEach(function (row) {
       products.push(row);
@@ -121,6 +120,22 @@ app.get('/comment', function(req, renderer){
       title: 'Comment page',
       locals: {
         products: products 
+      }
+    });
+  });
+});
+
+app.get('/comment/:id', function(req, renderer) {
+  var id = req.params.id;
+  db.get(id, function(err, doc) {
+    if (err) {
+      console.log('no such document');
+      return;
+    }
+    renderer.render('comment_detail', {
+      title: 'Comment page',
+      locals: {
+        comment: doc 
       }
     });
   });
