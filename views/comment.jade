@@ -1,24 +1,14 @@
 h1= title
 form(method="post", action='/comment/save')
   fieldset
-    legend Comment
+    legend Crib/Recommend a product you feel strongly about to others
     p
       label(for="user[name]") Comment
         textarea(name="comment", rows='4', cols='80')
-        .tip
-          | Crib/Recommend a product you feel strongly about
-          | to others
-    p
-      select(name="company")
-        option(value="") -- Select Company--
-        option(value="AB") Adarsh
-        option(value="BC") Prestige
-        option(value="SK") Purvankara
     p
       select(name="product")
         option(value="") -- Select Product --
-        option(value="AB") Palm Meadows 
-        option(value="BC") Shantiniketan
-        option(value="SK") Riveira 
+        - each product in products 
+          option(value="#{product._id}") #{product.display_name}
   p.buttons
     input(type="submit", value="Send")

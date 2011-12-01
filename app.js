@@ -29,6 +29,18 @@ db.save('_design/comments', {
   }
 });
 
+db.save('_design/products', {
+  views: {
+    all: {
+      map: function(doc) {
+        if (doc.level && doc.level === 'product') {
+          emit(doc.level, doc);
+        }   
+      }
+    }
+  }
+});
+
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -95,9 +107,38 @@ app.get('/login', function(req, res){
   });
 });
 
-app.get('/comment', function(req, res){
-  res.render('comment', {
-    title: 'Comment page'
+app.get('/comment', function(req, renderer){
+  var products = [];
+  db.view('products/all', function (err, res) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.forEach(function (row) {
+      products.push(row);
+    });
+    renderer.render('comment', {
+      title: 'Comment page',
+      locals: {
+        products: products 
+      }
+    });
+  });
+});
+
+app.post('/comment/save', function(req, renderer) {
+  if ( !req.body.product || !req.body.comment ) {
+    throw new Error('Both product and comment are needed');
+  }
+
+  db.save({
+    "level": "comment",
+    "product_id": req.body.product,
+    "created_at": (new Date()).getTime(),
+    "posted_by": "",
+    "comment": req.body.comment
+  }, function(err, res) {
+    renderer.redirect('/', 301);
   });
 });
 
