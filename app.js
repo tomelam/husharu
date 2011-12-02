@@ -17,11 +17,11 @@ function compile(str, path) {
     .set('compress', true);
 }
 
-db.save('_design/comments', {
+db.save('_design/all', {
   views: {
-    all: {
+    comments_products: {
       map: function(doc) {
-        if (doc.level && doc.level === 'comment') {
+        if (doc.level && (doc.level === 'comment' || doc.level === 'product')) {
           emit(doc.level, doc);
         }   
       }
@@ -67,36 +67,65 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-function renderHome(renderer, comments) {
+function renderHome(renderer, comments, products) {
   renderer.render('index', {
     title: 'Welcome',
     locals: {
-      comments: comments
+      comments: comments,
+      products: products 
     }
   });
+}
+
+function getCommentCount(res) {
+  var i = 0;
+
+  res.forEach(function (row) {
+    if (row.level === 'comment') {
+      i++;
+    }
+  });
+
+  return i;
+}
+
+function getProducts(res) {
+  var products = [];
+  res.forEach(function (row) {
+    if (row.level === 'product') {
+      products.push(row);
+    }
+  });
+
+  return products;
 }
 
 // Routes
 
 app.get('/', function(req, renderer){
   var comments = [];
-  db.view('comments/all', function (err, res) {
+  db.view('all/comments_products', function (err, res) {
     if (err) {
       console.log(err);
       return;
     }
-    var end = res.length - 1, i = 0;
+    var end = getCommentCount(res) - 1,
+        i = 0,
+        products = getProducts(res);
+
     res.forEach(function (row) {
-      row.display_date = (new Date(row.created_at*1000)).toDateString();
-      db.get(row.product_id, function(err1, doc) {
-        row.product_name = doc.display_name;
-        comments.push(row);
-        if (i === end) {
-          renderHome(renderer, comments);
-        } else {
-          i++;
-        }
-      });
+      if (row.level === 'comment') {
+        row.display_date = (new Date(row.created_at*1000)).toDateString();
+        db.get(row.product_id, function(err1, doc) {
+          row.product_name = doc.display_name;
+          comments.push(row);
+          if (i === end) {
+            renderHome(renderer, comments, products);
+          } else {
+            i++;
+          }
+        });
+      }
     });
   });
 });

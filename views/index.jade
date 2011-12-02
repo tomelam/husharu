@@ -1,7 +1,7 @@
 h1= title
 
 div.clearfix
-  section.grid_8
+  section.grid_7
     - if (comments.length)
         header Some recent comments
         ul#comments
@@ -17,9 +17,18 @@ div.clearfix
                 span.product #{comment.product_name}.
                 |  See <a href='/comment/#{comment._id}'>more</a>
     - else
-      p.clearfix There are no comments yet.  Be the <a href='/comment'>first</a>.
+      p There are no comments yet.  Be the <a href='/comment'>first</a>.
 
-  section#features.grid_4
+  section.grid_2
+    - if (products.length)
+      header Product List
+      p
+        - each product in products
+          <a href='/product/#{product._id}'>#{product.display_name}</a>,
+    - else
+      p There are no products yet.
+
+  section#features.grid_3
     ul
       li Comment about the products you care about
       li Vote on other comments/products
