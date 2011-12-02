@@ -2,14 +2,14 @@
 html(lang="en")
   head
     title= title
-    script(src='http://static.ak.fbcdn.net/connect/en_US/core.js')
     link(rel='stylesheet', href='/stylesheets/normalize.css')
+    link(rel='stylesheet', href='/stylesheets/fluid960gs.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/feature.css')
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Julee|Prata')
 
   body
-    #container
+    #container.container_12
       header <a href='/'>husharu</a>
       p.right.clearfix 
         <a href='/comment'>Comment</a> | 
@@ -18,3 +18,5 @@ html(lang="en")
       footer
         span.left &copy; 2011 husharu authors.  <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>Some rights reserved</a>
         span.right <a href='https://github.com/caulagi/husharu'>Fork me on github</a>
+    script(src='http://static.ak.fbcdn.net/connect/en_US/core.js')
+    script(src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js")
