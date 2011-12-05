@@ -1,10 +1,9 @@
-h1= title
+h3=title
 form(method="post", action='/comment/save')
   fieldset
     legend Crib/Recommend a product you feel strongly about to others
     p
-      label(for="user[name]") Comment
-        textarea(name="comment", rows='4', cols='80')
+      textarea(name="comment", rows='4', cols='80', placeholder='Please enter your comment here')
     p
       select(name="product")
         option(value="") -- Select Product --
