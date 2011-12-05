@@ -7,10 +7,23 @@ html(lang="en")
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/feature.css')
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Julee|Prata')
+    
+    script(type='text/javascript')
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1895899-10']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
 
   body
     #container.container_12
-      header <a href='/'>husharu</a>
+      header.clearfix 
+        <a href='/'>husharu</a>
+        span.right the social consumer forum
       p.right.clearfix 
         <a href='/comment'>Comment</a> | 
         <a href='/login' class='orange button'>Login</a>
