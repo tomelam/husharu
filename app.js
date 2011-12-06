@@ -6,8 +6,8 @@ var express = require('express'),
     app = module.exports = express.createServer(),
     stylus = require('stylus'),
     everyauth = require('everyauth'),
-    login = require('./login'),
     cradle = require('cradle'),
+    conf = require('./conf'),
     db = new(cradle.Connection)().database('husharu_db');
 
 function compile(str, path) {
@@ -55,8 +55,8 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'htuayreve'}));
-  app.use(everyauth.middleware());
   app.use(app.router);
+  app.use(everyauth.middleware());
 
   app.use(stylus.middleware({
       src: __dirname + '/views' // .styl files are located in `views/stylesheets`
@@ -218,6 +218,29 @@ app.post('/comment/save', function(req, renderer) {
   });
 });
 
+everyauth
+  .facebook
+    .appId(conf.fb.appId)
+    .appSecret(conf.fb.appSecret)
+    .scope("email")
+    .findOrCreateUser(function (session, accessToken, accessTokenExtra, fbUserMetadata) {
+      console.log('creating user');
+    /*
+      db.save({
+        'level': 'user', 
+        'name': 'Shady Joe', 
+        'email': 'avenger_ppc@yahoo.com', 
+        'created_at': new Date()
+      }, function(err, doc) {
+        if (err) {
+          throw new Error('Error saving user');
+        }
+      });
+      */
+    })
+    .redirectPath('/');
+
+everyauth.debug = true;
 everyauth.helpExpress(app);
 
 app.listen(process.env['app_port'] || 3000);
