@@ -25,6 +25,13 @@ db.save('_design/all', {
           emit(doc.level, doc);
         }   
       }
+    },
+    comments_for_product: {
+      map: function(doc) {
+        if (doc.level && doc.level === 'comment' && doc.product_id) {
+          emit(doc.product_id, doc);
+        }   
+      }
     }
   }
 });
@@ -106,8 +113,7 @@ app.get('/', function(req, renderer){
   var comments = [];
   db.view('all/comments_products', function (err, res) {
     if (err) {
-      console.log(err);
-      throw new Error('Unable to find products and comments');
+      next(new Error('Unable to find comments and products or something is wrong'));
     }
     var end = getCommentCount(res) - 1,
         i = 0,
@@ -154,18 +160,44 @@ app.get('/comment', function(req, renderer){
   });
 });
 
-app.get('/comment/:id', function(req, renderer) {
+app.get('/comment/:id', function(req, renderer, next) {
   var id = req.params.id;
   db.get(id, function(err, doc) {
     if (err) {
-      console.log('no such document');
-      return;
+      return next(new Error('No such comment or something is wrong'));
     }
     renderer.render('comment_detail', {
       title: 'Comment page',
       locals: {
         comment: doc 
       }
+    });
+  });
+});
+
+app.get('/product/:id', function(req, renderer, next) {
+  var id = req.params.id;
+  db.view('all/comments_for_product', {key: id}, function(err, res) {
+    if (err) {
+      console.log(err);
+      return next(new Error('No such product or something is wrong'));
+    }
+    var comments = [];
+    res.forEach(function (row) {
+      row.display_date = (new Date(row.created_at*1000)).toDateString();
+      comments.push(row);
+    });
+
+    db.get(id, function(err, doc) {
+      if (err) {
+        return next(new Error('failed to get product details'));
+      }
+      renderer.render('product_detail', {
+        title: 'Comments about ' + doc.display_name,
+        locals: {
+          comments: comments
+        }
+      });
     });
   });
 });

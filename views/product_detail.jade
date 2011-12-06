@@ -1,0 +1,17 @@
+h3=title
+
+div.clearfix
+  section.grid_6
+    - if (comments.length)
+        ul#comments
+          - each comment in comments
+            li.comment
+              p #{comment.comment}
+              p.attribution
+                | posted on
+                span.date #{comment.display_date}
+                |  by
+                span.user #{comment.posted_by}.
+                |  See <a href='/comment/#{comment._id}'>more</a>
+    - else
+      p There are no comments yet.  Be the <a href='/comment'>first</a>.
