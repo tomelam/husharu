@@ -24,9 +24,15 @@ html(lang="en")
       header.clearfix 
         <a href='/'>husharu</a>
         span.right the social consumer forum
-      p.right.clearfix 
+      div.right.clearfix 
         <a href='/comment'>Comment</a> | 
         <a href='/login' class='orange button'>Login</a>
+      div.clear
+      div#search.grid_12
+        form(method='post', action='/search')
+          input(type='search', placeholder='Search', results='5', name='search')
+          input(type='submit', value='Search')
+      div.clear
       != body
       footer
         span.left &copy; 2011 husharu authors.  <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>Some rights reserved</a>
