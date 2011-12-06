@@ -107,7 +107,7 @@ app.get('/', function(req, renderer){
   db.view('all/comments_products', function (err, res) {
     if (err) {
       console.log(err);
-      return;
+      throw new Error('Unable to find products and comments');
     }
     var end = getCommentCount(res) - 1,
         i = 0,
@@ -116,7 +116,7 @@ app.get('/', function(req, renderer){
     res.forEach(function (row) {
       if (row.level === 'comment') {
         row.display_date = (new Date(row.created_at*1000)).toDateString();
-        db.get(row.product_id, function(err1, doc) {
+        db.get(row.product_id, function(err, doc) {
           row.product_name = doc.display_name;
           comments.push(row);
           if (i === end) {
