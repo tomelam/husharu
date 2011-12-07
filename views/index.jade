@@ -1,7 +1,12 @@
-h3= title
+section#features.clearfix
+  ul
+    li.grid_2 Comment about products you care about
+    li.grid_3 Vote on other comments &amp; products
+    li.grid_3 Build a credibility number for products
+    li.grid_2 Informed choices, influence choices 
 
-div.clearfix
-  section.grid_6
+div.clearfix#features-content
+  section.grid_8
     - if (comments.length)
         header Some recent comments
         ul#comments
@@ -19,17 +24,13 @@ div.clearfix
     - else
       p There are no comments yet.  Be the <a href='/comment'>first</a>.
 
-  section.grid_3
+  section.grid_4
     - if (products.length)
       header Product List
-      p
+      ul
         - each product in products
-          <a href='/product/#{product._id}'>#{product.display_name}</a>,
+          li
+            a(href='/product/#{product._id}') #{product.display_name}
     - else
       p There are no products yet.
 
-  section#features.grid_3
-    ul
-      li Comment about the products you care about
-      li Vote on other comments/products
-      li Build a credibility number for all products
