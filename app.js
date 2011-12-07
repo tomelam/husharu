@@ -3,12 +3,47 @@
  */
 
 var express = require('express'),
-    app = module.exports = express.createServer(),
     stylus = require('stylus'),
     everyauth = require('everyauth'),
     cradle = require('cradle'),
     conf = require('./conf'),
     db = new(cradle.Connection)().database('husharu_db');
+
+
+function addUser(source, user, promise) {
+  var profile_link = user.link || '',
+      email = user.email || '',
+      first_name = user.first_name || '',
+      last_name = user.last_name || '',
+      display_name = user.name || '';
+
+  db.save({
+    level : 'user',
+    source: source,
+    profile: profile_link,
+    email: email,
+    first_name: first_name,
+    last_name: last_name,
+    display_name: display_name
+  }, function(err, res) {
+    if (err) return promise.fail(err);
+    promise.fulfill(res);
+  });
+
+  return promise;
+}
+
+everyauth.debug = true;
+everyauth
+  .facebook
+    .appId(conf.fb.appId)
+    .appSecret(conf.fb.appSecret)
+    .scope("email")
+    .findOrCreateUser(function (session, accessToken, accessTokenExtra, fbUserMetadata) {
+      console.log(fbUserMetadata);
+      return addUser('facebook', fbUserMetadata, this.Promise());
+    })
+    .redirectPath('/');
 
 function compile(str, path) {
   return stylus(str)
@@ -48,6 +83,8 @@ db.save('_design/products', {
   }
 });
 
+var app = module.exports = express.createServer();
+
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -64,6 +101,7 @@ app.configure(function(){
     , compile: compile
   }));
   app.use(express.static(__dirname + '/public'));
+  everyauth.helpExpress(app);
 });
 
 app.configure('development', function(){
@@ -138,7 +176,7 @@ app.get('/', function(req, renderer){
 
 app.get('/login', function(req, res){
   res.render('login', {
-    title: 'Login'
+    title: 'Login using your provider'
   });
 });
 
@@ -217,31 +255,6 @@ app.post('/comment/save', function(req, renderer) {
     renderer.redirect('/', 301);
   });
 });
-
-everyauth
-  .facebook
-    .appId(conf.fb.appId)
-    .appSecret(conf.fb.appSecret)
-    .scope("email")
-    .findOrCreateUser(function (session, accessToken, accessTokenExtra, fbUserMetadata) {
-      console.log('creating user');
-    /*
-      db.save({
-        'level': 'user', 
-        'name': 'Shady Joe', 
-        'email': 'avenger_ppc@yahoo.com', 
-        'created_at': new Date()
-      }, function(err, doc) {
-        if (err) {
-          throw new Error('Error saving user');
-        }
-      });
-      */
-    })
-    .redirectPath('/');
-
-everyauth.debug = true;
-everyauth.helpExpress(app);
 
 app.listen(process.env['app_port'] || 3000);
 console.info("Started on port %d", app.address().port);

@@ -1,14 +1,14 @@
 h3= title
 - if (!everyauth.loggedIn)
-  div.grid_6.prefix_3#login
-    div
-      #fb-login.fb_button(style='background-position: left -188px')
-        a.fb_button_medium(href='/auth/facebook')
-          span#fb_login_text.fb_button_text
-            Connect with Facebook
-      |  or 
-      a(href='/auth/twitter')
-        img(style='border: 0px', src='https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-l.png')
+  div#login.prefix_2
+    span.provider
+      a(href='/auth/facebook') Facebook
+    span.provider
+      a(href='#') Twitter
+    span.provider
+      a(href='#') Google
+    span.provider
+      a(href='#') Yahoo
 
   div.clear
 

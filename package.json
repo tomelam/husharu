@@ -7,7 +7,7 @@
       "express": ">= 2.5"
     , "stylus": ">= 0.19.3"
     , "jade": ">= 0.18.0"
-    , "everyauth": ">= 0.2.27"
+    , "everyauth": ">= 0.2.25"
     , "cradle": ">= 0.5.7"
   }
   , "engines": { "node": "0.6", "npm": "1"}
