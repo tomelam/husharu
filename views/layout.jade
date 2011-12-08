@@ -4,6 +4,7 @@ html(lang="en")
     title= title
     link(rel='stylesheet', href='/stylesheets/normalize.css')
     link(rel='stylesheet', href='/stylesheets/fluid960gs.css')
+    link(rel='stylesheet', href='/stylesheets/buttons.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/feature.css')
     link(rel='stylesheet', href='/stylesheets/login.css')
@@ -25,18 +26,26 @@ html(lang="en")
       header.clearfix 
         <a href='/'>husharu</a>
         span.right the social consumer forum
-      div.right.clearfix 
-        <a href='/comment'>Comment</a> | 
-        <a href='/login' class='orange button'>Login</a>
-      div.clear
+      nav.right.clearfix 
+        ul
+          li.button
+            a(href='/comment', class='minimal') Comment
+          li.button
+            a(href='/login', class='minimal') Login
+          li.button
+            a(href='http://github.com/caulagi/husharu/issues/new', class='cupid-green', target='_blank') Feedback
+
       div#search.grid_12
         form(method='post', action='/search')
-          input(type='search', placeholder='Search products/comments', results='5', name='search')
+          input(type='search', placeholder='Search products/comments', name='search')
           input(type='submit', value='Search')
       div.clear
       != body
       footer
         span.left &copy; 2011 husharu authors.  <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>Some rights reserved</a>
-        span.right <a href='https://github.com/caulagi/husharu' target='_blank'>Fork me on github</a>
+        span.right 
+          a(href='https://github.com/caulagi/husharu', target='_blank') Fork me on github
+          |  &nbsp;&nbsp;|&nbsp;&nbsp;
+          a(href='https://github.com/caulagi/husharu/issues/new', target='_blank') Report a bug
     script(src='http://static.ak.fbcdn.net/connect/en_US/core.js')
     script(src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js")
