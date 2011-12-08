@@ -1,5 +1,11 @@
 var cradle = require('cradle'),
-    db = new(cradle.Connection)().database('husharu_db');
+    db_user = process.env['husharu_db_user'] || 'admin',
+    db_pass = process.env['husharu_db_pass'] || 'admin',
+    db_host = process.env['husharu_db_host'] || '127.0.0.1',
+    db_port = process.env['husharu_db_port'] || 5984,
+    db = new(cradle.Connection)(db_host, db_port, {
+      auth: { username: db_user, password: db_pass }
+    }).database('husharu_db');
 
 exports.db = db;
 

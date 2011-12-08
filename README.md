@@ -8,6 +8,9 @@ To get started,
 
 * Install couchdb
 
+* Create an admin user for couchdb.  Go to your [couchdb instance](http://localhost:5984/_utils)
+and create an admin user (bottom right).
+
 * Create some dummy entries
 
         $ sh example_db.sh

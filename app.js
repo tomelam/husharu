@@ -41,11 +41,12 @@ app.configure('production', function(){
 
 // TODO: move to a separate file
 
-app.get('/', function(req, renderer){
+app.get('/', function(req, renderer, next){
   var comments = [];
   db.view('all/comments_products', function (err, res) {
     if (err) {
-      next(new Error('Unable to find comments and products or something is wrong'));
+      console.log(err);
+      return renderer.render('500.jade', {error: err, title: '500 Error'});
     }
     var end = getCommentCount(res) - 1,
         i = 0,
@@ -78,7 +79,8 @@ app.get('/comment', function(req, renderer){
   var products = [];
   db.view('products/all', function (err, res) {
     if (err) {
-      throw new Error('Unable to retrieve products');
+      console.log(err);
+      return renderer.render('500.jade', {error: err, title: '500 Error'});
     }
     res.forEach(function (row) {
       products.push(row);
@@ -96,7 +98,8 @@ app.get('/comment/:id', function(req, renderer, next) {
   var id = req.params.id;
   db.get(id, function(err, doc) {
     if (err) {
-      return next(new Error('No such comment or something is wrong'));
+      console.log(err);
+      return renderer.render('500.jade', {error: err, title: '500 Error'});
     }
     renderer.render('comment_detail', {
       title: 'Comment page',
@@ -111,7 +114,8 @@ app.get('/product/:id', function(req, renderer, next) {
   var id = req.params.id;
   db.view('all/comments_for_product', {key: id}, function(err, res) {
     if (err) {
-      return next(new Error('No such product or something is wrong'));
+      console.log(err);
+      return renderer.render('500.jade', {error: err, title: '500 Error'});
     }
     var comments = [];
     res.forEach(function (row) {
@@ -121,7 +125,8 @@ app.get('/product/:id', function(req, renderer, next) {
 
     db.get(id, function(err, doc) {
       if (err) {
-        return next(new Error('failed to get product details'));
+        console.log(err);
+        return renderer.render('500.jade', {error: err, title: '500 Error'});
       }
       renderer.render('product_detail', {
         title: 'Comments about ' + doc.display_name,
@@ -182,5 +187,5 @@ function getProducts(res) {
   return products;
 }
 
-app.listen(process.env['app_port'] || 3000);
+app.listen(process.env['husharu_port'] || 3000);
 console.info("Started on port %d", app.address().port);

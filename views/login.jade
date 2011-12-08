@@ -1,14 +1,10 @@
 h3= title
 - if (!everyauth.loggedIn)
   div#login.prefix_2
-    span.provider
-      a(href='/auth/facebook') Facebook
-    span.provider
-      a(href='#') Twitter
-    span.provider
-      a(href='#') Google
-    span.provider
-      a(href='#') Yahoo
+    a(href='/auth/facebook', class='provider') Facebook
+    a(href='#', class='provider') Twitter
+    a(href='#', class='provider') Google
+    a(href='#', class='provider') Yahoo
 
   div.clear
 
