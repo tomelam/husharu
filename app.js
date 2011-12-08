@@ -111,7 +111,6 @@ app.get('/product/:id', function(req, renderer, next) {
   var id = req.params.id;
   db.view('all/comments_for_product', {key: id}, function(err, res) {
     if (err) {
-      console.log(err);
       return next(new Error('No such product or something is wrong'));
     }
     var comments = [];

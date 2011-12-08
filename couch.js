@@ -5,18 +5,32 @@ exports.db = db;
 
 db.save('_design/all', {
   views: {
-    comments_products: {
-      map: function(doc) {
-        if (doc.level && (doc.level === 'comment' || doc.level === 'product')) {
-          emit(doc.level, doc);
-        }   
+      comments_products: {
+        map: function(doc) {
+          if (doc.level && (doc.level === 'comment' || doc.level === 'product')) {
+            emit(doc.level, doc);
+          }   
+        }
       }
-    },
-    comments_for_product: {
+    , comments_for_product: {
       map: function(doc) {
         if (doc.level && doc.level === 'comment' && doc.product_id) {
           emit(doc.product_id, doc);
         }   
+      }
+    }
+    , users: {
+      map: function(doc) {
+        if (doc.level && doc.level === 'user') {
+          emit(doc.level, doc)
+        }
+      }
+    }
+    , userByEmail: {
+      map: function(doc) {
+        if (doc.level && doc.level === 'user') {
+          emit(doc.email, doc)
+        }
       }
     }
   }

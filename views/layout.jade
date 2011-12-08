@@ -31,7 +31,10 @@ html(lang="en")
           li.button
             a(href='/comment', class='minimal') Comment
           li.button
-            a(href='/login', class='minimal') Login
+            - if (everyauth.loggedIn)
+              a(href='/logout', class='minimal') Logout
+            - else
+              a(href='/login', class='minimal') Login
           li.button
             a(href='http://github.com/caulagi/husharu/issues/new', class='cupid-green', target='_blank') Feedback
 
