@@ -42,6 +42,14 @@ html(lang="en")
         form(method='post', action='/search')
           input(type='search', placeholder='Search products/comments', name='search')
           input(type='submit', value='Search')
+      //if IE
+        div#ie-notsupported
+          | Your browser is not supported.  Please use 
+          a(href='http://google.com/chrome/') Chrome
+          |  or
+          a(href='http://getfirefox.com') Firefox
+          span.close X
+
       div.clear
       != body
       footer
@@ -50,5 +58,5 @@ html(lang="en")
           a(href='https://github.com/caulagi/husharu', target='_blank') Fork me on github
           |  &nbsp;&nbsp;|&nbsp;&nbsp;
           a(href='https://github.com/caulagi/husharu/issues/new', target='_blank') Report a bug
-    script(src='http://static.ak.fbcdn.net/connect/en_US/core.js')
     script(src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js")
+    script(src="/javascript/actions.js")
