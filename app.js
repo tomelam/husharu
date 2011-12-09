@@ -54,7 +54,7 @@ app.get('/', function(req, renderer, next){
 
     res.forEach(function (row) {
       if (row.level === 'comment') {
-        row.display_date = (new Date(row.created_at*1000)).toDateString();
+        row.display_date = (new Date(+row.created_at)).toDateString();
         db.get(row.product_id, function(err, doc) {
           row.product_name = doc.display_name;
           comments.push(row);
@@ -119,7 +119,7 @@ app.get('/product/:id', function(req, renderer, next) {
     }
     var comments = [];
     res.forEach(function (row) {
-      row.display_date = (new Date(row.created_at*1000)).toDateString();
+      row.display_date = (new Date(+row.created_at)).toDateString();
       comments.push(row);
     });
 
