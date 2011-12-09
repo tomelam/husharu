@@ -1,10 +1,11 @@
-require('./login');
+require('./lib/login');
 
 var express = require('express'),
     stylus = require('stylus'),
     everyauth = require('everyauth'),
-    hex_md5 = require('./md5').hex_md5,
-    db = require('./couch').db;
+    hex_md5 = require('./lib/md5').hex_md5,
+    util = require('./lib/util'),
+    db = require('./lib/couch').db;
 
 function compile(str, path) {
   return stylus(str)
@@ -56,7 +57,7 @@ app.get('/', function(req, renderer, next){
 
     res.forEach(function (row) {
       if (row.level === 'comment') {
-        row.display_date = (new Date(+row.created_at)).toDateString();
+        row.display_date = util.prettyDate(+row.created_at);
         db.get(row.product_id, function(err, doc) {
           row.product_name = doc.display_name;
           row.gravatar = hex_md5(row.posted_by);

@@ -11,16 +11,12 @@ div.clearfix#features-content
         header Some recent comments
         ul#comments
           - each comment in comments
-            li.comment 
-              p #{comment.comment}
+            li(style="background-image: url('http://gravatar.com/avatar/#{comment.gravatar}?r=g&s=60'); background-repeat: no-repeat", class='comment')
+              p.content #{comment.comment}
               p.attribution 
-                | posted on 
-                span.date #{comment.display_date}
-                |  by
-                img(src='http://gravatar.com/avatar/#{comment.gravatar}?r=g&s=60', alt='Gravatar image for #{comment.posted_by}', class='gravatar')
                 |  about
-                span.product #{comment.product_name}.
-                |  See <a href='/comment/#{comment._id}'>more</a>
+                a(href='/comment/#{comment._id}') #{comment.product_name}
+                |  , #{comment.display_date}
     - else
       p There are no comments yet.  Be the <a href='/comment'>first</a>.
 
