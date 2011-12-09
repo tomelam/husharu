@@ -17,7 +17,7 @@ div.clearfix#features-content
                 | posted on 
                 span.date #{comment.display_date}
                 |  by
-                span.user #{comment.posted_by}
+                img(src='http://gravatar.com/avatar/#{comment.gravatar}?r=g&s=60', alt='Gravatar image for #{comment.posted_by}', class='gravatar')
                 |  about
                 span.product #{comment.product_name}.
                 |  See <a href='/comment/#{comment._id}'>more</a>
@@ -33,4 +33,3 @@ div.clearfix#features-content
             a(href='/product/#{product._id}') #{product.display_name}
     - else
       p There are no products yet.
-

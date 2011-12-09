@@ -44,3 +44,11 @@ everyauth
       return addUser('facebook', fbUserMetadata, this.Promise());
     })
     .redirectPath('/');
+
+everyauth.everymodule.findUserById(function (id, callback) {
+    console.log('-----------'+id);
+    db.get(id, function(err, doc) {
+      if (err) return callback(err);
+      callback(null, doc);
+    });
+});

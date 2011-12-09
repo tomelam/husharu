@@ -16,14 +16,14 @@ sobha=`curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H "Co
 #sobha=`curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H "Content-type: application/json" -d '{"level": "product", "display_name": "Sobha Forest View"}' | python -c 'import json, sys; data = json.loads(sys.stdin.read()); print data["id"]'`
 
 # Create a comment document
-curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$sobha\", \"posted_by\": \"Shady Joe\", \"created_at\": \"1322550106000\", \"comment\": \"This project is yet to start.\" }"
+curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$sobha\", \"posted_by\": \"avenger_ppc4@yahoo.com\", \"created_at\": \"1322550106000\", \"comment\": \"This project is yet to start.\" }"
 
 # create another comment
-curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$sobha\", \"posted_by\": \"Shady Joe\", \"created_at\": \"1322551106000\", \"comment\": \"This is another comment about Sobha forest view.\" }"
+curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$sobha\", \"posted_by\": \"invalid@example.com\", \"created_at\": \"1322551106000\", \"comment\": \"This is another comment about Sobha forest view.\" }"
 
 bsnl=`curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H "Content-type: application/json" -d '{"level": "product", "display_name": "BSNL"}' | grep -Po '"id":.*?",' | perl -pe 's/"id"://; s/^"//; s/",$//'`
-curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"Shady Joe\", \"created_at\": \"1322531106000\", \"comment\": \"Do the BSNL guys actually repair anything?\" }"
-curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"Shady Joe\", \"created_at\": \"1312531106000\", \"comment\": \"BSNL guys fixed my modem yesterday.  It is not working again!\" }"
+curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"invalid@example.com\", \"created_at\": \"1322531106000\", \"comment\": \"Do the BSNL guys actually repair anything?\" }"
+curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"invalid@example.com\", \"created_at\": \"1312531106000\", \"comment\": \"BSNL guys fixed my modem yesterday.  It is not working again!\" }"
 
 # create some products
 curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H "Content-type: application/json" -d '{"level": "product", "display_name": "HP Gas"}'

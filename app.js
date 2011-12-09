@@ -1,8 +1,10 @@
+require('./login');
+
 var express = require('express'),
     stylus = require('stylus'),
     everyauth = require('everyauth'),
-    db = require('./couch').db,
-    login = require('./login');
+    hex_md5 = require('./md5').hex_md5,
+    db = require('./couch').db;
 
 function compile(str, path) {
   return stylus(str)
@@ -57,6 +59,7 @@ app.get('/', function(req, renderer, next){
         row.display_date = (new Date(+row.created_at)).toDateString();
         db.get(row.product_id, function(err, doc) {
           row.product_name = doc.display_name;
+          row.gravatar = hex_md5(row.posted_by);
           comments.push(row);
           if (i === end) {
             renderHome(renderer, comments, products);
@@ -143,11 +146,12 @@ app.post('/comment/save', function(req, renderer) {
     throw new Error('Both product and comment are needed');
   }
 
+  user = req.session.auth.facebook.user.email;
   db.save({
     "level": "comment",
     "product_id": req.body.product,
     "created_at": (new Date()).getTime(),
-    "posted_by": "",
+    "posted_by": user,
     "comment": req.body.comment
   }, function(err, res) {
     renderer.redirect('/', 301);
