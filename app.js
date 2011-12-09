@@ -75,11 +75,21 @@ app.get('/', function(req, renderer, next){
 
 app.get('/login', function(req, res){
   res.render('login', {
-    title: 'Login using your provider'
+    title: 'You need  to be logged in to perform actions on this site - login using your provider'
   });
 });
 
 app.get('/comment', function(req, renderer){
+
+  try {
+    var user = req.session.auth.facebook.user.email;
+  } catch(err) {} 
+
+  if (!user) {
+    req.session.redirectTo = '/comment';
+    return renderer.redirect('/login');
+  }
+
   var products = [];
   db.view('products/all', function (err, res) {
     if (err) {
