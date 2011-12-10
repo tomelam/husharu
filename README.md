@@ -12,7 +12,7 @@ To get started,
 
 * Create some dummy entries
 
-        $ sh example_db.sh
+        $ sh db/example_db.sh
 
 * Install the required packages
 
