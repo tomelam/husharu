@@ -1,0 +1,9 @@
+ul#comments
+    - each comment in comments
+      li(style="background-image: url('http://gravatar.com/avatar/#{comment.gravatar}?r=g&s=60');", class='comment')
+        p.content #{comment.comment}
+        p.attribution 
+          |  about 
+          a(href='/product/#{comment.product_id}') #{comment.product_name}
+          |  , #{comment.display_date}. See
+          a(href='/comment/#{comment._id}') more

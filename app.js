@@ -145,7 +145,8 @@ app.get('/product/:id', function(req, renderer, next) {
       renderer.render('product_detail', {
         title: 'Comments about ' + doc.display_name,
         locals: {
-          comments: comments
+          comments: comments,
+          product: doc
         }
       });
     });

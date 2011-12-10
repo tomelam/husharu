@@ -1,17 +1,18 @@
-h3=title
+div.clearfix#product-detail
+  section#intro.grid_12.clearfix
+    div.left
+      img(src='#{product.image}', alt='Image for #{product.display_name}')
+    div.right
+      h4 #{title}
+      p.summary
+        a(href='#{product.url}', target='_blank') Product page
+        |  (on the web)
+      p.summary Credibility index: (Loading)
+      p.summary Pat on the back: (Loading)
+      p.summary Kick in the pant: (Loading)
 
-div.clearfix
   section.grid_6
     - if (comments.length)
-        ul#comments
-          - each comment in comments
-            li.comment
-              p #{comment.comment}
-              p.attribution
-                | posted on
-                span.date #{comment.display_date}
-                |  by
-                span.user #{comment.posted_by}.
-                |  See <a href='/comment/#{comment._id}'>more</a>
+        include includes/comments
     - else
       p There are no comments yet.  Be the <a href='/comment'>first</a>.
