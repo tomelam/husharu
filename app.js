@@ -171,6 +171,10 @@ app.post('/comment/save', function(req, renderer) {
 });
 
 function getUserEmail(req) {
+  if (!req.session.auth) {
+    return null;
+  }
+
   if (req.session.auth.facebook) {
     return req.session.auth.facebook.user.email;
   } else if (req.session.auth.google) {
