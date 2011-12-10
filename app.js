@@ -133,7 +133,7 @@ app.get('/product/:id', function(req, renderer, next) {
     }
     var comments = [];
     res.forEach(function (row) {
-      row.display_date = (new Date(+row.created_at)).toDateString();
+      row.display_date = util.prettyDate(+row.created_at);
       comments.push(row);
     });
 
