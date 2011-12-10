@@ -58,7 +58,6 @@ app.get('/', function(req, renderer, next){
     res.forEach(function (row) {
       if (row.level === 'comment') {
         row.display_date = util.prettyDate(+row.created_at);
-        console.log(row);
         db.get(row.product_id, function(err, doc) {
           row.product_name = doc.display_name;
           row.gravatar = hex_md5(row.posted_by);

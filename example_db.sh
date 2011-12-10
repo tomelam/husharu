@@ -23,7 +23,7 @@ curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-t
 
 bsnl=`curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H "Content-type: application/json" -d '{"level": "product", "display_name": "BSNL"}' | grep -Po '"id":.*?",' | perl -pe 's/"id"://; s/^"//; s/",$//'`
 curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"invalid@example.com\", \"created_at\": \"1322531106000\", \"comment\": \"Do the BSNL guys actually repair anything?\" }"
-curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"invalid@example.com\", \"created_at\": \"1312531106000\", \"comment\": \"BSNL guys fixed my modem yesterday.  It is not working again!\" }"
+curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H 'Content-type: application/json' -d "{\"level\": \"comment\", \"parent_id\": \"\", \"product_id\": \"$bsnl\", \"posted_by\": \"invalid@example.com\", \"created_at\": \"1322537306000\", \"comment\": \"BSNL guys fixed my modem yesterday.  It is not working again!\" }"
 
 # create some products
 curl -X POST http://$db_user:$db_pass@$db_host:$db_port/husharu_db -H "Content-type: application/json" -d '{"level": "product", "display_name": "HP Gas"}'
