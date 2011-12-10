@@ -73,6 +73,12 @@ app.get('/', function(req, renderer, next){
   });
 });
 
+app.get('/oauth/error', function(req, res){
+  res.render('oauth-error', {
+    title: 'OAuth access denied'
+  });
+});
+
 app.get('/login', function(req, res){
   res.render('login', {
     title: 'You need  to be logged in to perform actions on this site - login using your provider'
@@ -80,12 +86,7 @@ app.get('/login', function(req, res){
 });
 
 app.get('/comment', function(req, renderer){
-
-  try {
-    var user = req.session.auth.facebook.user.email;
-  } catch(err) {} 
-
-  if (!user) {
+  if (!getUserEmail(req)) {
     req.session.redirectTo = '/comment';
     return renderer.redirect('/login');
   }
@@ -158,17 +159,26 @@ app.post('/comment/save', function(req, renderer) {
     throw new Error('Both product and comment are needed');
   }
 
-  user = req.session.auth.facebook.user.email;
   db.save({
     "level": "comment",
     "product_id": req.body.product,
     "created_at": (new Date()).getTime(),
-    "posted_by": user,
+    "posted_by": getUserEmail(req),
     "comment": req.body.comment
   }, function(err, res) {
     renderer.redirect('/', 301);
   });
 });
+
+function getUserEmail(req) {
+  if (req.session.auth.facebook) {
+    return req.session.auth.facebook.user.email;
+  } else if (req.session.auth.google) {
+    return req.session.auth.google.user.id;
+  }
+
+  return null;
+}
 
 function renderHome(renderer, comments, products) {
   renderer.render('index', {
