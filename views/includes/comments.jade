@@ -6,8 +6,6 @@ ul#comments
           - if (comment.product_name)
             | about 
             a(href='/product/#{comment.product_id}') #{comment.product_name}
-            |  , #{comment.display_date}. See
-            a(href='/comment/#{comment._id}') more
-          - else
-            #{comment.display_date}. See
-            a(href='/comment/#{comment._id}') more
+            |  ,
+          #{comment.display_date}. See
+          a(href='/comment/#{comment._id}') more
